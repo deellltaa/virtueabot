@@ -54,7 +54,6 @@ async def search(ctx: discord.Interaction, tags: str = "rating:g,s"):
         embedVar.set_image(url=post[0].get("file_url"))
         embedVar.description = f"[source]({post[0].get('source')})"
         print("Search success.")
-        print(post[0].get('tag_string'))
          
     except pe.PybooruHTTPError as y:
         embedVar = discord.Embed(title="Oops!", color=0xff0011)
