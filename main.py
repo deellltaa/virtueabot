@@ -147,7 +147,7 @@ async def _8ball(ctx: discord.Interaction, question: str = ""):
                 "Oooh, I dunno. Ask me again when I care.",
                 "I don't fuckin' know, ask me later.",
                 "You can't handle what I'm about to say.",
-                "Can't really say right now.'",
+                "Can't really say right now.",
                 "Think about what you said, and then ask me again.",
                 "Really? No.",
                 "It's not looking too hot for you, chief.",
