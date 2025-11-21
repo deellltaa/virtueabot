@@ -157,7 +157,7 @@ async def _8ball(ctx: discord.Interaction, question: str = ""):
                 ]
     print('8ball read')
     embedVar = discord.Embed(title='Magic 8 Ball', color=0xa32bfb)
-    embedVar.add_field(name=question, value=random.choice(responses))
+    embedVar.add_field(name=f'Q: {question}', value=f'A: {random.choice(responses)}')
     embedVar.description = ctx.user.display_name + " asked:"
     embedVar.set_thumbnail(url='https://i.imgur.com/QnYAMPJ.jpeg')
     await ctx.followup.send(embed=embedVar)
