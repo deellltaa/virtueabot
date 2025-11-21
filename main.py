@@ -5,6 +5,7 @@ from typing import List
 import dotenv
 from pybooru import Danbooru
 import pybooru.exceptions as pe
+import random
 # Day 1, trying to create a functional bot. Will leave comments like this
 # depending on what I feel like during then. And mark appropriately.
 # Maybe upload to Git? Probably not...
@@ -128,6 +129,38 @@ async def do_sync(ctx: discord.Interaction):
             await ctx.followup.send("You need more power.")
     except Exception as e:
         print(e)
+        
+@bot.tree.command(name='8ball', description="Roll virtuea's special 8ball!")
+async def _8ball(ctx: discord.Interaction, question: str = ""):
+    await ctx.response.defer()
+    
+    responses =["Yeah, sure. For shizzle and all that shit.",
+                "Obviously.",
+                "Duh.",
+                "100%.",
+                "I mean... probably.",
+                "The way I see it, yeah.",
+                "Eh... 50/50.",
+                "Probably.",
+                "Yes.",
+                "The gods say yes.",
+                "Oooh, I dunno. Ask me again when I care.",
+                "I don't fuckin' know, ask me later.",
+                "You can't handle what I'm about to say.",
+                "Can't really say right now.'",
+                "Think about what you said, and then ask me again.",
+                "Really? No.",
+                "It's not looking too hot for you, chief.",
+                "The Akashic Records that I made up just now says no.",
+                "It's not looking pretty.",
+                "No, lol."
+                ]
+    print('8ball read')
+    embedVar = discord.Embed(title='Magic 8 Ball', color=0xa32bfb)
+    embedVar.add_field(name=question, value=random.choice(responses))
+    embedVar.description = ctx.user.display_name + " asked:"
+    embedVar.set_thumbnail(url='https://i.imgur.com/QnYAMPJ.jpeg')
+    await ctx.followup.send(embed=embedVar)
 
 @bot.event
 async def on_message(message):
