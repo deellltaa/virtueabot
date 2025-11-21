@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
+from typing import List
 import dotenv
 from pybooru import Danbooru
 import pybooru.exceptions as pe
@@ -40,7 +42,16 @@ async def trolled(ctx: discord.Interaction):
 # a proper metatag? Either way, this severely limits user
 # freedom, but should be fine for now. Maybe figure out if the other sites
 # don't have a limit like that?
-@bot.tree.command(name="search", description="Search danbooru for random images with tags; Ratings are SFW or NSFW.")
+async def search_autocomplete(ctx: discord.Interaction, current: str ) -> List[app_commands.Choice[str]]:
+    choices = ['sfw', 'nsfw', 'na']
+    return [
+        app_commands.Choice(name=choice, value=choice)
+        for choice in choices if current.lower() in choice.lower()
+    ]
+    
+
+@bot.tree.command(name="search", description="Search danbooru for random images with tags")
+@app_commands.autocomplete(rating=search_autocomplete)
 async def search(ctx: discord.Interaction, tags: str = "", rating: str = "sfw"):
         
     await ctx.response.defer()
@@ -50,6 +61,8 @@ async def search(ctx: discord.Interaction, tags: str = "", rating: str = "sfw"):
         tags = tags + ' rating:q,e'
     else:
         tags = tags + ' rating:g,s'
+    if rating.lower() == 'na':
+        pass # Pass through if making own rating search.
     
     try:
         post = dbclient.post_list(limit = 1, tags=tags, random=True)
