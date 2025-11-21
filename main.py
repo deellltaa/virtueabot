@@ -40,7 +40,7 @@ async def trolled(ctx: discord.Interaction):
 # a proper metatag? Either way, this severely limits user
 # freedom, but should be fine for now. Maybe figure out if the other sites
 # don't have a limit like that?
-@bot.tree.command(name="search", description="Search danbooru for random images with tags; use the exact tags. Rating takes: sfw, or nsfw. Pick your poison.")
+@bot.tree.command(name="search", description="Search danbooru for random images with tags; Ratings are SFW or NSFW.")
 async def search(ctx: discord.Interaction, tags: str = "", rating: str = "sfw"):
         
     await ctx.response.defer()
