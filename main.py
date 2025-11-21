@@ -40,12 +40,16 @@ async def trolled(ctx: discord.Interaction):
 # a proper metatag? Either way, this severely limits user
 # freedom, but should be fine for now. Maybe figure out if the other sites
 # don't have a limit like that?
-@bot.tree.command(name="search", description="Search danbooru for random images with tags; use the exact tags")
-async def search(ctx: discord.Interaction, tags: str = "rating:g,s"):
+@bot.tree.command(name="search", description="Search danbooru for random images with tags; use the exact tags. Rating takes: sfw, or nsfw. Pick your poison.")
+async def search(ctx: discord.Interaction, tags: str = "", rating: str = "sfw"):
         
     await ctx.response.defer()
     print(tags)
     tags = tags + " -status:deleted" # Hopefully stop the missing file_url appearances..
+    if rating.lower() == 'nsfw':
+        tags = tags + ' rating:q,e'
+    else:
+        tags = tags + ' rating:g,s'
     
     try:
         post = dbclient.post_list(limit = 1, tags=tags, random=True)
